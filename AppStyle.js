@@ -8,6 +8,28 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    rowView: {
+        flexDirection: 'row',
+    },
+    homeContainer: {
+        flex: 1,
+        backgroundColor: '#F3F3E7',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    welcomeText: {
+        fontWeight: '700',
+        marginBottom: 15,
+    },
+    homeCards: {
+        width: '90%',
+    },
+    textCentered: {
+        textAlign: 'center',
+    },
+    itemCentered: {
+        alignSelf: 'center',
+    },
     inputContainer: {
         marginTop: 120,
         width: '80%',
@@ -40,9 +62,19 @@ export default StyleSheet.create({
     },
     searchView: {
         flex: 1,
-        backgroundColor: '#3AA3A0',
-        width: '100%'
+        backgroundColor: '#FDB750',
+        width: '100%',
+        padding: 15,
+        justifyContent: 'center',
     },
+    searchTextInput: {
+        fontSize: 18,
+        width: '80%',
+        alignSelf: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+        backgroundColor: '#F3F3E7',
+    }, 
     categoryCardGroup: {
         flex: 2,
     },
@@ -56,6 +88,8 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#F8EA8C',
         width: '100%',
+        padding: 25,
+        justifyContent: 'center',
     },
     keywordStyle: {
         textTransform: 'lowercase',
@@ -64,12 +98,16 @@ export default StyleSheet.create({
         fontSize: 26,
     },
     searchResultList: {
-        flex: 2,
-        padding: 10,
+        flex: 3,
+        width: '100%',
     },
-    searcedRecipesListItems: {
-        alignItems: 'center',
-    },
+    searchedRecipeCards: {
+        width: '60%',
+        margin: 10,
+
+    }, 
+
+
     searcedRecipesListImg: {
         width: 140,
         height: 140,
@@ -116,5 +154,13 @@ export default StyleSheet.create({
         marginBottom: 20,
         marginTop: 20,
         width: '100%'
+    },
+    recipeCardTitle: {
+        fontSize: 24,
+        marginBottom: 20,
+    },
+    recipeCardLinkTxt: {
+        fontSize: 16,
+        fontWeight: '700',
     },
 })
