@@ -1,14 +1,15 @@
 import React from "react";
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { Card, Headline, Title } from 'react-native-paper';
+import styles from '../AppStyle';
 
 const HomeScreen = ({ navigation }) => {
 
     return (
-        <View style={styles.container}>
-            <Headline>Welcome</Headline>
+        <View style={styles.homeContainer}>
+            <Headline style={styles.welcomeText}>Welcome</Headline>
             <Card
-                style={styles.card}
+                style={styles.homeCards}
                 onPress={() => navigation.navigate('Shopping')}>
                 <Card.Content>
                     <Title>Shopping Lists</Title>
@@ -16,7 +17,7 @@ const HomeScreen = ({ navigation }) => {
                 <Card.Cover source={require('../assets/list.jpg')} />
             </Card>
             <Card
-                style={styles.card}
+                style={styles.homeCards}
                 onPress={() => navigation.navigate('Recipes')}>
                 <Card.Content>
                     <Title>Recipes</Title>
@@ -27,15 +28,3 @@ const HomeScreen = ({ navigation }) => {
     );
 }
 export default HomeScreen;
-// TODO: move to AppStyle.js
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    card: {
-        width: '90%'
-    }
-});
