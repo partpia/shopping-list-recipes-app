@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     ImageBackground,
     ScrollView,
@@ -20,11 +20,13 @@ import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { getCategories } from "../components/RecipeCategories";
 
 const RecipeDetailsScreen = ({ route, navigation }) => {
-    const { recipe } = route.params;
+    const { recipe, saved } = route.params;
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [isSaved, setIsSaved] = useState(true);
+    const [isSaved, setIsSaved] = useState(false);
+
+    useEffect(() => setIsSaved(saved), [saved]);
 
     const showDialog = () => setDialogOpen(true);
     const hideDialog = () => setDialogOpen(false);
@@ -41,11 +43,12 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
         try {
             await addDoc(collection(db, `recipes/${auth.currentUser.uid}/userRecipes`), {
                 label: recipe.label,
-                imageUrl: recipe.image,
+                image: recipe.image,
                 ingredients: recipe.ingredients,
-                instructionsUrl: recipe.url,
+                url: recipe.url,
                 category: selectedCategory
             })
+            navigation.goBack();
         } catch (error) {
             console.log(error)
         }
@@ -72,22 +75,22 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
             </ImageBackground>
             <View style={styles.recipeDetails}>
                 <View>
-                    <Title>{recipe.label}</Title>
+                    <Title style={styles.recipeCardTitle}>{recipe.label}</Title>
                 </View>
                 <View style={styles.test}>
                     {recipe.ingredients.map((item, index) => (
                         <Chip
                             key={index}
-                            textStyle={{ width: 'auto' }}
+                            textStyle={{ width: 'auto', fontSize: 16, fontWeight: '700' }}
                             style={styles.ingredientsChips}>
                             {item.text}
                         </Chip>
                     ))}
                 </View>
                 <Divider style={styles.divider} />
-                <Text>Link to instructions: {recipe.url}</Text>
+                <Text style={styles.recipeCardLinkTxt}>Link to instructions: {recipe.url}</Text>
                 {isSaved ? (
-                    <Button icon="plus-box-multiple" mode="contained" onPress={() => showDialog()}>
+                    <Button icon="delete" mode="contained" onPress={() => showDialog()}>
                         Remove Recipe
                     </Button>)
                     : (

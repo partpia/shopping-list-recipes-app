@@ -15,7 +15,7 @@ import styles from '../AppStyle';
 import { getCategories } from "../components/RecipeCategories";
 
 const RecipesScreen = ({ navigation }) => {
-    const [keyword, setKeyWord] = useState('');
+    const [keyword, setKeyword] = useState('');
     const [categories, setCategories] = useState([]);
 
     useEffect(() => fetchCategories(), []);
@@ -30,16 +30,22 @@ const RecipesScreen = ({ navigation }) => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container} >
             <View style={styles.searchView}>
-                <Headline>What do you want to eat next?</Headline>
+                <Headline style={styles.textCentered}>What do you want to eat next?</Headline>
                 <TextInput
                     label='Type here!'
                     value={keyword}
-                    onChangeText={text => setKeyWord(text)} />
+                    onChangeText={text => setKeyword(text)}
+                    mode='outlined'
+                    outlineColor='black'
+                    activeOutlineColor='#A82810'
+                    style={styles.searchTextInput}
+                     />
                 <IconButton
                     icon='magnify'
                     color='black'
-                    size={28}
-                    onPress={() => navigation.navigate('Search Recipes', { keyword: keyword })} />
+                    size={32}
+                    onPress={() => navigation.navigate('Search Recipes', { word: keyword })}
+                    style={styles.itemCentered} />
             </View>
             <View style={styles.categoryCardGroup}>
                 <Headline>Categories</Headline>

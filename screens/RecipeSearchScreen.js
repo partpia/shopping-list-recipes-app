@@ -2,29 +2,34 @@ import React, { useState, useEffect } from "react";
 import {
     FlatList,
     Image,
-    SafeAreaView,
+    KeyboardAvoidingView,
     Text,
     TouchableOpacity,
     View
 } from 'react-native';
 import { apikey, appid } from "../apikeys";
-import { Button, Title } from "react-native-paper";
+import { Button, Card, IconButton, TextInput, Title } from "react-native-paper";
 import styles from '../AppStyle';
 
 const RecipeSearchScreen = ({ route, navigation }) => {
-    const { keyword } = route.params;
+    const { word } = route.params;
     const [searchedRecipes, setSearchedRecipes] = useState([]);
     const [nextResultsUrl, setNextResultsUrl] = useState('');
+    const [keyword, setKeyword] = useState('');
 
-    useEffect(() => searchRecipesByKeyword(), [keyword]);
+    useEffect(() => {
+        setKeyword(word);
+        searchRecipesByKeyword(word)
+    }, [word]);
 
-    const searchRecipesByKeyword = () => {
+    const searchRecipesByKeyword = (word) => {
         try {
-            fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${keyword}&app_id=${appid}&app_key=${apikey}&mealType=Dinner&field=label&field=image&field=url&field=ingredients&field=mealType`)
+            fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${word}&app_id=${appid}&app_key=${apikey}&mealType=Dinner&field=label&field=image&field=url&field=ingredients&field=mealType`)
                 .then(response => response.json())
                 .then(data => {
                     setSearchedRecipes(data.hits);
                     setNextResultsUrl(data._links.next.href);
+                    console.log('nyt');
                 })
         } catch (error) {
             console.log(error);
@@ -64,9 +69,26 @@ const RecipeSearchScreen = ({ route, navigation }) => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}>
             <View style={styles.searchResultText}>
-                <Title>You asked for <Text style={styles.keywordStyle}>{keyword}</Text> and we surely do have plenty of delicious recipes for you!</Title>
+                <Title style={styles.textCentered}>You asked for <Text style={styles.keywordStyle}>{keyword}</Text> and we surely do have plenty of delicious recipes for you!</Title>
+                <View style={styles.rowView}>
+                    <TextInput
+                        label='Find more'
+                        mode='outlined'
+                        value={keyword}
+                        onChangeText={text => setKeyword(text)}
+                        style={styles.searchTextInput}
+                    />
+                    <IconButton
+                        icon='magnify'
+                        color='black'
+                        size={34}
+                        onPress={() => searchRecipesByKeyword(keyword)}
+                        style={styles.itemCentered} />
+                </View>
             </View>
             <View style={styles.searchResultList}>
                 <FlatList
@@ -74,20 +96,25 @@ const RecipeSearchScreen = ({ route, navigation }) => {
                     keyExtractor={(item, index) => index}
                     ItemSeparatorComponent={listSeparator}
                     renderItem={({ item, index }) =>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('Recipe Details', { recipe: item.recipe })}
-                            style={{ backgroundColor: index % 2 === 0 ? '#E9DAC4' : '#FBE5C8', alignItems: 'center' }}>
-                            <Text style={styles.searcedRecipesListText}>
-                                {item.recipe.label}
-                            </Text>
-                            <Image
-                                style={styles.searcedRecipesListImg}
-                                source={{ uri: item.recipe.image }}
-                            />
-                        </TouchableOpacity>}
+                            <FlatList
+                                data={searchedRecipes}
+                                keyExtractor={(item, index) => index}
+                                renderItem={({ item, index }) =>
+                                    <Card
+                                        onPress={() => navigation.navigate('Recipe Details', { recipe: item.recipe })}
+                                        style={{
+                                            alignSelf: index % 2 === 0 ? 'flex-start' : 'flex-end',
+                                            width: '60%',
+                                            margin: 10,
+                                            marginLeft: 60,
+                                            marginRight: 60,}}>
+                                        <Card.Cover source={{ uri: item.recipe.image }} />
+                                        <Card.Title title={item.recipe.label} />
+                                    </Card>}
+                            /> }
                 />
             </View>
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 }
 export default RecipeSearchScreen; 
