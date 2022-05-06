@@ -1,27 +1,16 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
-    View }
-from 'react-native';
+import { View } from 'react-native';
+import AddShoppingList from "../components/AddShoppingList";
 import ShoppingLists from "../components/ShoppingLists";
+import styles from '../AppStyle';
 
-const ShoppingScreen = () => {
+const ShoppingScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Coming soon!</Text>
-            <ShoppingLists />
+            <ShoppingLists navigation={navigation} />
+            <AddShoppingList />
         </View>
     );
 }
 export default ShoppingScreen;
-// TODO: move to AppStyle.js
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
