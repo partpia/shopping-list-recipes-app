@@ -7,6 +7,7 @@ export default StyleSheet.create({
         backgroundColor: '#F3F3E7',
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
     },
     rowView: {
         flexDirection: 'row',
@@ -74,7 +75,7 @@ export default StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         backgroundColor: '#F3F3E7',
-    }, 
+    },
     categoryCardGroup: {
         flex: 2,
     },
@@ -105,9 +106,7 @@ export default StyleSheet.create({
         width: '60%',
         margin: 10,
 
-    }, 
-
-
+    },
     searcedRecipesListImg: {
         width: 140,
         height: 140,
@@ -163,4 +162,26 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
     },
+    /* ShoppingLists.js */
+    shoppingListView: {
+        flex: 2,
+        width: '90%'
+    }, 
+    shoppingListItems: {
+        flex: 2,
+        width: '95%',
+    },
+    listOfShoppingLists: {
+        width: '90%',
+        backgroundColor:'green',
+    },
+
+    /* FAB */
+    fabButton: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+    },
+ 
 })
