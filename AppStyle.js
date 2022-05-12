@@ -105,7 +105,6 @@ export default StyleSheet.create({
     searchedRecipeCards: {
         width: '60%',
         margin: 10,
-
     },
     searcedRecipesListImg: {
         width: 140,
@@ -116,13 +115,28 @@ export default StyleSheet.create({
     searcedRecipesListText: {
         fontSize: 20,
     },
+    savedRecipeCardTitle: {
+        textAlign: 'center',
+    },
+    savedRecipesList: {
+        width: '100%',
+        padding: 10,
+    },
+    savedRecipesCardList: {
+        height: 450,
+    },
+    savedRecipeCard: {
+        height: '75%',
+        marginBottom: 10,
+    },
+
     modalCentered: {
         justifyContent: 'center',
         alignItems: 'center',
     },
     ingredientsChips: {
         justifyContent: 'center',
-        backgroundColor: '#F6C324',
+        backgroundColor: '#F6CBB7',
         margin: 5,
     },
     test: {
@@ -149,10 +163,15 @@ export default StyleSheet.create({
     },
     divider: {
         borderWidth: 1,
-        borderColor: '#3AA3A0',
+        borderColor: '#90ADC6',
         marginBottom: 20,
         marginTop: 20,
         width: '100%'
+    },
+    recipeCardActions: {
+        backgroundColor: '#E9DDD4',
+        padding: 10,
+        marginTop: 30,
     },
     recipeCardTitle: {
         fontSize: 24,
@@ -161,6 +180,15 @@ export default StyleSheet.create({
     recipeCardLinkTxt: {
         fontSize: 16,
         fontWeight: '700',
+    },
+    recipeCardButtons: {
+        marginTop: 20,
+    },
+    recipeCardButtonBcColor: {
+        color: '#0D698B',
+    },
+    recipeCardButtonTxtColor: {
+        color: '#9C2D41',
     },
     /* ShoppingLists.js */
     shoppingListView: {
@@ -183,5 +211,28 @@ export default StyleSheet.create({
         right: 0,
         bottom: 0,
     },
- 
+    /* ShoppingItemsScreen.js */
+    shoppingItemsContainer: {
+        flex: 1,
+        padding: 10,
+    },
+    sectionTitle: {
+        fontWeight: '700',
+        textTransform: 'uppercase',
+        color: 'black',
+    },
+    itemTitle: {
+        
+    },
+    itemsPickedUp: {
+        color: 'gray',
+        textDecorationLine: 'line-through',
+    },
+    /* AddItemToList.js */
+    fabAddItem: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+    },
 })
