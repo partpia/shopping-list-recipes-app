@@ -87,12 +87,19 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
                         </Chip>
                     ))}
                 </View>
-                <Divider style={styles.divider} />
-                <Text style={styles.recipeCardLinkTxt}>Link to instructions: {recipe.url}</Text>
+            </View>
+            <View style={styles.recipeCardActions}>
+                <Button>Link to instructions:</Button>
+                <Text style={styles.recipeCardLinkTxt}>{recipe.url}</Text>
                 {isSaved ? (
-                    <Button icon="delete" mode="contained" onPress={() => showDialog()}>
-                        Remove Recipe
-                    </Button>)
+                    <View style={styles.recipeCardButtons}>
+                        <Button icon="playlist-edit" mode="text" onPress={() => showDialog()} labelStyle={styles.recipeCardButtonBcColor}>
+                            Add ingredients to list
+                        </Button>
+                        <Button icon="delete" mode="text" onPress={() => showDialog()} labelStyle={styles.recipeCardButtonTxtColor}>
+                            Delete
+                        </Button>
+                    </View>)
                     : (
                         <Button icon="plus-box-multiple" mode="contained" onPress={() => showCategories()}>
                             Save Recipe
