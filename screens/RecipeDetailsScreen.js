@@ -8,7 +8,6 @@ import {
     Button,
     Chip,
     Dialog,
-    Divider,
     Paragraph,
     RadioButton,
     Text,
@@ -64,6 +63,10 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
         }
     }
 
+    const addIngredientsToShoppingList = () => {
+        
+    }
+
     return (
         <ScrollView
             contentContainerStyle={{ flexGrow: 1 }}
@@ -89,7 +92,7 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
                 </View>
             </View>
             <View style={styles.recipeCardActions}>
-                <Button>Link to instructions:</Button>
+                <Button style={styles.largerFontSize}>Link to instructions:</Button>
                 <Text style={styles.recipeCardLinkTxt}>{recipe.url}</Text>
                 {isSaved ? (
                     <View style={styles.recipeCardButtons}>
@@ -101,7 +104,7 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
                         </Button>
                     </View>)
                     : (
-                        <Button icon="plus-box-multiple" mode="contained" onPress={() => showCategories()}>
+                        <Button icon="plus-box-multiple" mode="text" onPress={() => showCategories()} labelStyle={styles.recipeCardSaveButtonColor}>
                             Save Recipe
                         </Button>)
                 }

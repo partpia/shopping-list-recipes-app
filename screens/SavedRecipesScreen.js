@@ -33,20 +33,24 @@ const SavedRecipesScreen = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <FlatList
-                style={{ width: '100%' }}
                 data={recipes}
                 renderItem={({ item }) => (
-                    <Card
-                        onPress={() => navigation.navigate('Recipe Details', { recipe: item, saved: true })}>
-                        <Card.Cover source={{ uri: item.image }} />
-                        <Card.Content>
-                            <Title>{item.label}</Title>
-                        </Card.Content>
-                        <Divider style={styles.divider} />
-                    </Card>
+                    <View style={styles.savedRecipesList}>
+                        <Card
+                            style={styles.savedRecipesCardList}
+                            onPress={() => navigation.navigate('Recipe Details', { recipe: item, saved: true })}>
+                            <Card.Cover
+                                source={{ uri: item.image }}
+                                style={styles.savedRecipeCard} />
+                            <Card.Content>
+                                <Title style={styles.savedRecipeCardTitle}>{item.label}</Title>
+                            </Card.Content>
+                        </Card>
+                    </View>
                 )}
                 keyExtractor={(item, index) => index}
             />
+
         </View>
     );
 }

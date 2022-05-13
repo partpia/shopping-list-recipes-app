@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
     FlatList,
-    Image,
     KeyboardAvoidingView,
     Text,
-    TouchableOpacity,
     View
 } from 'react-native';
 import { apikey, appid } from "../apikeys";
-import { Button, Card, IconButton, TextInput, Title } from "react-native-paper";
+import { Card, IconButton, TextInput, Title } from "react-native-paper";
 import styles from '../AppStyle';
 
 const RecipeSearchScreen = ({ route, navigation }) => {
@@ -102,12 +100,7 @@ const RecipeSearchScreen = ({ route, navigation }) => {
                                 renderItem={({ item, index }) =>
                                     <Card
                                         onPress={() => navigation.navigate('Recipe Details', { recipe: item.recipe })}
-                                        style={{
-                                            alignSelf: index % 2 === 0 ? 'flex-start' : 'flex-end',
-                                            width: '60%',
-                                            margin: 10,
-                                            marginLeft: 60,
-                                            marginRight: 60,}}>
+                                        style={styles.searchedRecipesCardList}>
                                         <Card.Cover source={{ uri: item.recipe.image }} />
                                         <Card.Title title={item.recipe.label} />
                                     </Card>}
