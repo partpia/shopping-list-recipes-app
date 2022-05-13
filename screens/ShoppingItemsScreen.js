@@ -6,7 +6,7 @@ import { collection, doc, getDoc, getDocs, query, where } from "firebase/firesto
 import styles from '../AppStyle';
 import AddItemToList from "../components/AddItemToList";
 
-const ShoppingItemsScreen = ({ navigation, route }) => {
+const ShoppingItemsScreen = ({ route }) => {
     const { listId } = route.params;
     const [items, setItems] = useState([]);
     const [itemsPickedUp, setItemsPickedUp] = useState([]);
@@ -29,7 +29,6 @@ const ShoppingItemsScreen = ({ navigation, route }) => {
                 tempSections.push(tempSection);
             });
             setSections(tempSections);
-            //console.log(tempSections);
         } catch (error) {
             console.log(error);
         }
@@ -63,48 +62,37 @@ const ShoppingItemsScreen = ({ navigation, route }) => {
         setItemsPickedUp(tempList);
     }
 
-    const test = () => {
-        console.log('ITEMS')
-        console.log(items);
-        console.log('PICKED')
-        console.log(itemsPickedUp);
-    }
-
     return (
-        <ScrollView>
-            <View style={styles.shoppingItemsContainer}>
-                {sections.map((section) => (
-                    <List.Section title={section.name} titleStyle={styles.sectionTitle} key={section.id}>
-                        {items &&
-                            items.filter(active => active.section === section.id).map((item, index) => (
-                                <List.Item
-                                    title={item.food + '  ' + item.quantity + ' ' + item.measure}
-                                    titleStyle={styles.itemTitle}
-                                    left={props => <List.Icon {...props} icon='checkbox-multiple-blank-circle-outline' key={index} />}
-                                    onPress={() => removeFromList(item)}
-                                    key={index} />
-                            ))
-                        }
-                        <Divider />
-                    </List.Section>
-                ))}
-                <List.Section title="Picked up" titleStyle={styles.sectionTitle}>
-                    {itemsPickedUp &&
-                        itemsPickedUp.map((item, index) => (
+        <View style={styles.shoppingItemsContainer}>
+            {sections.map((section) => (
+                <List.Section title={section.name} titleStyle={styles.sectionTitle} key={section.id}>
+                    {items &&
+                        items.filter(active => active.section === section.id).map((item, index) => (
                             <List.Item
                                 title={item.food + '  ' + item.quantity + ' ' + item.measure}
-                                titleStyle={styles.itemsPickedUp}
-                                left={props => <List.Icon {...props} icon='checkbox-multiple-marked-circle-outline' key={index} />}
-                                onPress={() => addBackToList(item)}
+                                titleStyle={styles.itemTitle}
+                                left={props => <List.Icon {...props} icon='checkbox-multiple-blank-circle-outline' key={index} />}
+                                onPress={() => removeFromList(item)}
                                 key={index} />
                         ))
                     }
+                    <Divider />
                 </List.Section>
-                <Button onPress={() => test()}>Test</Button>
-                <AddItemToList />
-            </View>
-        </ScrollView>
+            ))}
+            <List.Section title="Picked up" titleStyle={styles.sectionTitle}>
+                {itemsPickedUp &&
+                    itemsPickedUp.map((item, index) => (
+                        <List.Item
+                            title={item.food + '  ' + item.quantity + ' ' + item.measure}
+                            titleStyle={styles.itemsPickedUp}
+                            left={props => <List.Icon {...props} icon='checkbox-multiple-marked-circle-outline' key={index} />}
+                            onPress={() => addBackToList(item)}
+                            key={index} />
+                    ))
+                }
+            </List.Section>
+            <AddItemToList listId={listId} sections={sections} />
+        </View>
     );
-
 }
 export default ShoppingItemsScreen;
