@@ -12,6 +12,9 @@ export default StyleSheet.create({
     rowView: {
         flexDirection: 'row',
     },
+    largerFontSize: {
+        fontSize: 16,
+    },
     homeContainer: {
         flex: 1,
         backgroundColor: '#F3F3E7',
@@ -102,6 +105,11 @@ export default StyleSheet.create({
         flex: 3,
         width: '100%',
     },
+    searchedRecipesCardList: {
+        width: '90%',
+        margin: 10,
+        alignSelf: 'center',
+    },
     searchedRecipeCards: {
         width: '60%',
         margin: 10,
@@ -186,30 +194,46 @@ export default StyleSheet.create({
     },
     recipeCardButtonBcColor: {
         color: '#0D698B',
+        fontSize: 16,
     },
     recipeCardButtonTxtColor: {
         color: '#9C2D41',
+        fontSize: 16,
     },
     /* ShoppingLists.js */
     shoppingListView: {
         flex: 2,
-        width: '90%'
-    }, 
+        width: '90%',
+    },
     shoppingListItems: {
         flex: 2,
         width: '95%',
     },
     listOfShoppingLists: {
         width: '90%',
-        backgroundColor:'green',
+        backgroundColor: 'green',
+    },
+    noShoppingListView: {
+        flex: 0.3,
+        backgroundColor: '#98D7C2',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        margin: 20,
     },
 
-    /* FAB */
+
+    /* AddShoppingList.js */
     fabButton: {
-        position: 'absolute',
         margin: 16,
         right: 0,
         bottom: 0,
+    },
+    shoppingListIcons: {
+        flexDirection: 'row',
+        marginTop: 7,
     },
     /* ShoppingItemsScreen.js */
     shoppingItemsContainer: {
@@ -222,7 +246,7 @@ export default StyleSheet.create({
         color: 'black',
     },
     itemTitle: {
-        
+
     },
     itemsPickedUp: {
         color: 'gray',
@@ -234,5 +258,26 @@ export default StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+    },
+    addItemContainer: {
+        flex: 1,
+    },
+    modalContainer: {
+        flexGrow: 1,
+        padding: 20,
+        backgroundColor: 'white',
+        marginTop: 150,
+    },
+
+    /* RecipeDetailsScreen.js */
+    recipeCardSaveButtonColor: {
+        color: '#0D698B',
+        fontSize: 16,
+        padding: 5,
+    },
+    ingrToListModal: {
+        backgroundColor: 'white',
+        padding: 20,
+        height: 400,
     },
 })
