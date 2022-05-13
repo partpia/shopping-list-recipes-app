@@ -18,7 +18,7 @@ const AddShoppingList = () => {
     const [visible, setVisible] = useState(false);
     const [listName, setListName] = useState('');
     const [listIcon, setListIcon] = useState('cart');
-    const avatarIcons = ['cart', 'heart', 'medical-bag', 'car-hatchback', 'paw'];
+    const avatarIcons = ['cart', 'heart', 'medical-bag', 'shovel', 'paw', 'airplane', 'tshirt-crew', 'run-fast'];
 
     const showDialog = () => setVisible(true);
 
@@ -31,7 +31,6 @@ const AddShoppingList = () => {
                 name: listName,
                 avatarIcon: listIcon,
             })
-            navigation.goBack();
         } catch (error) {
             console.log(error)
         }
@@ -51,11 +50,11 @@ const AddShoppingList = () => {
                                 mode='outlined'
                             />
                         </Dialog.Content>
-                        <Dialog.Content style={styles.listAvatarColumns}>
-                            <Paragraph>Select image</Paragraph>
-                            <RadioButton.Group onValueChange={newValue => { setListIcon(newValue); console.log(newValue); }} value={listIcon}>
+                        <Dialog.Content>
+                            <Paragraph style={styles.largerFontSize}>Select image</Paragraph>
+                            <RadioButton.Group onValueChange={newValue => setListIcon(newValue)} value={listIcon}>
                                 {avatarIcons.map((item, index) => (
-                                    <View style={{ flexDirection: 'row' }}>
+                                    <View style={styles.shoppingListIcons}>
                                         <Avatar.Icon
                                             size={42}
                                             icon={item}

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList } from 'react-native';
-import { List } from 'react-native-paper';
+import { Headline, List, Subheading } from 'react-native-paper';
 import { auth, db } from "../firebase";
 import { collection, getDocs, query } from "firebase/firestore";
 import styles from '../AppStyle';
 
 const ShoppingLists = ({ navigation }) => {
     const [shoppingLists, setShoppingLists] = useState([]);
+    const [noList, setNoList] = useState(false);
 
     useEffect(() => {
         getShoppingLists();
@@ -23,32 +24,38 @@ const ShoppingLists = ({ navigation }) => {
                 tempList.id = doc.id;
                 tempLists.push(tempList);
             });
-            setShoppingLists(tempLists);
+            tempLists.length === 0 ? setNoList(true) : setShoppingLists(tempLists);
         } catch (error) {
             console.log(error);
         }
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.shoppingListView}>
+        <View style={styles.shoppingListView}>
+            {noList ? (
+                <View style={styles.noShoppingListView}>
+                    <Headline>No shopping lists yet!</Headline>
+                    <Subheading>Add first one</Subheading>
+                </View>
+            ) : (
                 <FlatList
                     data={shoppingLists}
-                    keyExtractor={(item, index) => index}
-                    renderItem={({ item }) => (
+                    renderItem={({ item, index }) => (
                         <List.Item
                             title={item.name}
                             titleStyle={{ fontWeight: '700' }}
                             onPress={() => navigation.navigate('Groceries', { listId: item.id })}
+                            key={item.id}
                             left={props =>
                                 <List.Icon {...props}
                                     icon={item.avatarIcon}
-                                    key={item.id}
+                                    key={index}
                                 />}
                         />
-                    )}>
-                </FlatList>
-            </View>
+                    )}
+                    keyExtractor={(item, index) => index}>
+                </FlatList>)
+            }
         </View>
     );
 }
