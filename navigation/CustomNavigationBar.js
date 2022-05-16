@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Appbar, Menu, Divider } from 'react-native-paper';
+import { Appbar, Menu } from 'react-native-paper';
 import { View } from "react-native";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
@@ -28,8 +28,6 @@ const CustomNavigationBar = ({ navigation, back }) => {
                     onDismiss={closeMenu}
                     anchor={<Appbar.Action icon='dots-vertical' onPress={openMenu} />}>
                     <Menu.Item onPress={handleSignOut} title="Sign out" icon='logout-variant' />
-                    <Divider />
-                    <Menu.Item onPress={() => { }} title="Something else" />
                 </Menu>
             </Appbar.Header>
         </View>

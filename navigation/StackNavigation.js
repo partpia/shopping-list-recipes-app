@@ -9,26 +9,31 @@ import ShoppingScreen from "../screens/ShoppingScreen";
 import RecipeDetailsScreen from "../screens/RecipeDetailsScreen";
 import RecipesScreen from "../screens/RecipesScreen";
 import RecipeSearchScreen from "../screens/RecipeSearchScreen";
+import ShoppingItemsScreen from "../screens/ShoppingItemsScreen";
+import IngredientsToList from "../screens/IngredientsToList";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
 
     return (
-            <Stack.Navigator
-                initialRouteName='Login'
-                screenOptions={{
-                    header: (props) => <CustomNavigationBar {...props} />,
-                }}>
-                <Stack.Screen options={{ headerShown: false }} name='Login' component={LoginScreen} />
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Shopping' component={ShoppingScreen} />
-                <Stack.Screen name='Recipes' component={RecipesScreen} />
-                <Stack.Screen name='BottomTabs' component={BottomTabNavigator} />
-                <Stack.Screen name='Search Recipes' component={RecipeSearchScreen} />
-                <Stack.Screen name='Recipe Details' component={RecipeDetailsScreen} />
-                <Stack.Screen name='Saved Recipes' component={SavedRecipesScreen} />
-            </Stack.Navigator>
+        <Stack.Navigator
+            initialRouteName='Login'
+            screenOptions={{
+                header: (props) => <CustomNavigationBar {...props} />,
+            }}>
+            <Stack.Screen name='Main' component={HomeScreen} />
+            <Stack.Screen name='Home' component={BottomTabNavigator} />
+            <Stack.Screen options={{ headerShown: false }} name='Login' component={LoginScreen} />
+            <Stack.Screen name='Shopping' component={ShoppingScreen} />
+            <Stack.Screen name='Recipes' component={RecipesScreen} />
+            <Stack.Screen name='BottomTabs' component={BottomTabNavigator} />
+            <Stack.Screen name='Search Recipes' component={RecipeSearchScreen} />
+            <Stack.Screen name='Recipe Details' component={RecipeDetailsScreen} />
+            <Stack.Screen name='Saved Recipes' component={SavedRecipesScreen} />
+            <Stack.Screen name='Groceries' component={ShoppingItemsScreen} />
+            <Stack.Screen name='Ingredients' component={IngredientsToList} />
+        </Stack.Navigator>
     );
 }
 export default StackNavigation;
