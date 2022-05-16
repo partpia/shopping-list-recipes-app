@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, View } from 'react-native';
-import { Button, FAB, Modal, Portal, RadioButton, TextInput } from 'react-native-paper';
+import { Button, FAB, Modal, Portal, RadioButton, Text, TextInput } from 'react-native-paper';
 import { auth, db } from "../firebase";
 import { addDoc, collection, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
-import styles from '../AppStyle';
 import { showAlert } from "./Alert";
+import { showToast } from "./Toast";
+import styles from '../AppStyle';
 
 const AddItemToList = (props) => {
     const [newItem, setNewItem] = useState({
         food: '',
         measure: '',
-        quantity: '',
-        section: ''
+        quantity: ''
     });
+    const [section, setSection] = useState('');
     const [newSection, setNewSection] = useState('');
     const [allItems, setAllItems] = useState([]);
-
+    const [showInput, setShowInput] = useState(false);
     const [visible, setVisible] = useState(false);
 
     const showModal = () => setVisible(true);
@@ -39,33 +40,41 @@ const AddItemToList = (props) => {
     }
     // checks section details
     const checkSection = async () => {
-        if (newItem.section !== '') {
-            saveNewItemWithSection();
-        } else {
-            if (newSection === '') {
-                showAlert("Add section", "Please insert section for new item.");
-            } else if (props.sections.length === 0) {
-                try {
-                    const docRef = await addDoc(collection(db, `sections/${auth.currentUser.uid}/userSections`), {
-                        name: newSection
-                    })
-                    setNewItem({...newItem, section: docRef.id});
-                    saveNewItemWithSection();
-                } catch (error) {
-                    console.log(error)
-                }
+        if (newSection === '' && section === '') {
+            showAlert("Add section", "Please select section!");
+        } else if (showInput) {
+            try {
+                const docRef = await addDoc(collection(db, `sections/${auth.currentUser.uid}/userSections`), {
+                    name: newSection
+                })
+                saveNewItemWithSection(docRef.id);
+            } catch (error) {
+                showToast('Failed to save section')
             }
+        } else {
+            saveNewItemWithSection(section);
         }
     }
-
-    const saveNewItemWithSection = async () => {
+    // saves new item with selected section
+    const saveNewItemWithSection = async (section) => {
         try {
             await updateDoc(doc(db, 'items', props.listId), {
-                active: arrayUnion(newItem)
+                active: arrayUnion({
+                    food: newItem.food,
+                    measure: newItem.measure,
+                    quantity: newItem.quantity,
+                    section: section
+                })
             });
-            setNewItem({});
+            setNewItem({
+                food: '',
+                measure: '',
+                quantity: ''
+            });
+            setNewSection('');
+            showToast('Item saved')
         } catch (error) {
-            console.log(error)
+            showToast('Failed to save item')
         }
     }
 
@@ -79,6 +88,9 @@ const AddItemToList = (props) => {
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalContainer}>
                     <ScrollView style={styles.addItemView}>
+                        <Text style={styles.addItemTxt}>
+                            ADD ITEM DETAILS
+                        </Text>
                         <TextInput
                             label="Item"
                             value={newItem.food}
@@ -98,7 +110,10 @@ const AddItemToList = (props) => {
                             style={styles.addItemInput}
                         />
                         <View>
-                            <RadioButton.Group onValueChange={section => setNewItem({ ...newItem, section: section })} value={newItem.section}>
+                            <Text style={styles.addItemTxt}>
+                                SELECT SECTION
+                            </Text>
+                            <RadioButton.Group onValueChange={newValue => setSection(newValue)} value={section}>
                                 {props.sections.map((item) => (
                                     <RadioButton.Item
                                         key={item.id}
@@ -111,19 +126,30 @@ const AddItemToList = (props) => {
                                     />
                                 ))}
                             </RadioButton.Group>
-                            <View style={styles.rowInputAndButton}>
+                            <RadioButton.Group onValueChange={() => setShowInput(true)}>
+                                <RadioButton.Item
+                                    key='New section'
+                                    label='New section'
+                                    value='New section'
+                                    labelStyle={{
+                                        fontSize: 18,
+                                        textTransform: 'capitalize',
+                                    }}
+                                />
+                            </RadioButton.Group>
+                            {showInput && (
                                 <TextInput
                                     label="New section"
                                     value={newSection}
                                     onChangeText={text => setNewSection(text)}
-                                    style={styles.addItemInputRow}
+                                    style={styles.addItemInput}
                                 />
-                                <Button
-                                    onPress={checkSection}
-                                    style={styles.addItemButton}>
-                                    Add
-                                </Button>
-                            </View>
+                            )}
+                            <Button
+                                onPress={checkSection}
+                                style={styles.addItemButton}>
+                                Add to list
+                            </Button>
                         </View>
                     </ScrollView>
                 </Modal>
