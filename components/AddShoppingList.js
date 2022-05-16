@@ -11,7 +11,7 @@ import {
 } from 'react-native-paper';
 import { View } from 'react-native';
 import { auth, db } from "../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import styles from '../AppStyle';
 
 const AddShoppingList = () => {
@@ -20,16 +20,28 @@ const AddShoppingList = () => {
     const [listIcon, setListIcon] = useState('cart');
     const avatarIcons = ['cart', 'heart', 'medical-bag', 'shovel', 'paw', 'airplane', 'tshirt-crew', 'run-fast'];
 
+    // handles dialog visibility
     const showDialog = () => setVisible(true);
-
     const hideDialog = () => setVisible(false);
-
+    // saves new shopping list
     const saveShoppingList = async () => {
         hideDialog();
         try {
-            await addDoc(collection(db, `lists/${auth.currentUser.uid}/userLists`), {
+            const docRef = await addDoc(collection(db, `lists/${auth.currentUser.uid}/userLists`), {
                 name: listName,
                 avatarIcon: listIcon,
+            })
+            createEmptyItemsList(docRef.id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // creates empty 'items'-table to database
+    const createEmptyItemsList = async (id) => {
+        try {
+            await setDoc(doc(db, "items", id), {
+                active: [],
+                inactive: [],
             })
         } catch (error) {
             console.log(error)
@@ -51,16 +63,16 @@ const AddShoppingList = () => {
                             />
                         </Dialog.Content>
                         <Dialog.Content>
-                            <Paragraph style={styles.largerFontSize}>Select image</Paragraph>
+                            <Paragraph style={styles.addItemTxt}>SELECT IMAGE</Paragraph>
                             <RadioButton.Group onValueChange={newValue => setListIcon(newValue)} value={listIcon}>
                                 {avatarIcons.map((item, index) => (
-                                    <View style={styles.shoppingListIcons}>
+                                    <View style={styles.shoppingListIcons} key={index}>
                                         <Avatar.Icon
                                             size={42}
                                             icon={item}
                                             key={index}
                                         />
-                                        <RadioButton value={item} />
+                                        <RadioButton value={item} key={item.id} />
                                     </View>
                                 ))}
                             </RadioButton.Group>
