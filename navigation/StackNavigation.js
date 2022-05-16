@@ -10,7 +10,7 @@ import RecipeDetailsScreen from "../screens/RecipeDetailsScreen";
 import RecipesScreen from "../screens/RecipesScreen";
 import RecipeSearchScreen from "../screens/RecipeSearchScreen";
 import ShoppingItemsScreen from "../screens/ShoppingItemsScreen";
-import IngredientsToList from "../screens/IngredientsToList";
+import IngredientsToListScreen from "../screens/IngredientsToListScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +32,7 @@ const StackNavigation = () => {
             <Stack.Screen name='Recipe Details' component={RecipeDetailsScreen} />
             <Stack.Screen name='Saved Recipes' component={SavedRecipesScreen} />
             <Stack.Screen name='Groceries' component={ShoppingItemsScreen} />
-            <Stack.Screen name='Ingredients' component={IngredientsToList} />
+            <Stack.Screen name='Ingredients' component={IngredientsToListScreen} />
         </Stack.Navigator>
     );
 }
