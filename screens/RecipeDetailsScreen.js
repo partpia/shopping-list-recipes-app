@@ -10,13 +10,14 @@ import {
     Dialog,
     Paragraph,
     RadioButton,
-    Text,
     Title
 } from 'react-native-paper';
+import * as Linking from 'expo-linking';
 import styles from '../AppStyle';
 import { auth, db } from "../firebase";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { getCategories } from "../components/RecipeCategories";
+import { showToast } from "../components/Toast";
 
 const RecipeDetailsScreen = ({ route, navigation }) => {
     const { recipe, saved } = route.params;
@@ -27,16 +28,18 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
 
     useEffect(() => setIsSaved(saved), [saved]);
 
+    // handles dialog visibility
     const showDialog = () => setDialogOpen(true);
     const hideDialog = () => setDialogOpen(false);
 
+    // gets categories and image url from Firestore
     const showCategories = async () => {
         const categories = await getCategories();
         setCategories(categories);
         setSelectedCategory(categories[0].id);
         showDialog();
     }
-
+    // saves recipe to Firestore (user's recipe collection)
     const saveRecipe = async () => {
         hideDialog();
         try {
@@ -47,12 +50,13 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
                 url: recipe.url,
                 category: selectedCategory
             })
+            showToast('Recipe saved')
             navigation.goBack();
         } catch (error) {
-            console.log(error)
+            showToast('Failed to save recipe')
         }
     }
-
+    // deletes recipe from Firestore (user's recipe collection)
     const deleteRecipe = async () => {
         hideDialog();
         try {
@@ -62,10 +66,10 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
             console.log(error);
         }
     }
-
-    const addIngredientsToShoppingList = () => {
-        
-    }
+    // opens recipes instructions in a browser
+    const openInstructionsInBrowser = (url) => {
+        Linking.openURL(url);
+    };
 
     return (
         <ScrollView
@@ -92,11 +96,15 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
                 </View>
             </View>
             <View style={styles.recipeCardActions}>
-                <Button style={styles.largerFontSize}>Link to instructions:</Button>
-                <Text style={styles.recipeCardLinkTxt}>{recipe.url}</Text>
+                <Button
+                icon="open-in-new"
+                    onPress={() => openInstructionsInBrowser(recipe.url)}
+                    labelStyle={styles.openInstrButton}>
+                    Open instructions in browser
+                </Button>
                 {isSaved ? (
                     <View style={styles.recipeCardButtons}>
-                        <Button icon="playlist-edit" mode="text" onPress={() => showDialog()} labelStyle={styles.recipeCardButtonBcColor}>
+                        <Button icon="playlist-edit" mode="text" onPress={() => navigation.navigate('Ingredients', { ingredients: recipe.ingredients })} labelStyle={styles.recipeCardButtonBcColor}>
                             Add ingredients to list
                         </Button>
                         <Button icon="delete" mode="text" onPress={() => showDialog()} labelStyle={styles.recipeCardButtonTxtColor}>
