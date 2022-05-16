@@ -9,6 +9,7 @@ import {
     Headline,
     IconButton,
     Title,
+    Text,
     TextInput }
 from 'react-native-paper';
 import styles from '../AppStyle';
@@ -28,7 +29,7 @@ const RecipesScreen = ({ navigation }) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container} >
+            style={styles.recipeContainer} >
             <View style={styles.searchView}>
                 <Headline style={styles.textCentered}>What do you want to eat next?</Headline>
                 <TextInput
@@ -48,7 +49,7 @@ const RecipesScreen = ({ navigation }) => {
                     style={styles.itemCentered} />
             </View>
             <View style={styles.categoryCardGroup}>
-                <Headline>Categories</Headline>
+                <Text style={styles.categoryHeadline}>MY RECIPES</Text>
                 <FlatList
                     data={categories}
                     renderItem={({ item }) => (

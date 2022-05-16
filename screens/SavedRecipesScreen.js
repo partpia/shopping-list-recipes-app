@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from 'react-native';
-import { Card, Divider, Title } from 'react-native-paper';
+import { Card, Title } from 'react-native-paper';
 import { auth, db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import styles from '../AppStyle';
@@ -9,8 +9,9 @@ const SavedRecipesScreen = ({ navigation, route }) => {
     const [recipes, setRecipes] = useState([]);
     const { categoryId } = route.params;
 
-    useEffect(() => { getRecipes(); }, []);
+    useEffect(() => getRecipes(), []);
 
+    // gets user's recipes from Firestore
     const getRecipes = async () => {
         let tempList = [];
 
@@ -31,7 +32,7 @@ const SavedRecipesScreen = ({ navigation, route }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.savedRecipesContainer}>
             <FlatList
                 data={recipes}
                 renderItem={({ item }) => (
