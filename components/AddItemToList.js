@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, View } from 'react-native';
 import { Button, FAB, Modal, Portal, RadioButton, Text, TextInput } from 'react-native-paper';
 import { auth, db } from "../firebase";
-import { addDoc, collection, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { showAlert } from "./Alert";
 import { showToast } from "./Toast";
 import styles from '../AppStyle';
@@ -15,29 +15,12 @@ const AddItemToList = (props) => {
     });
     const [section, setSection] = useState('');
     const [newSection, setNewSection] = useState('');
-    const [allItems, setAllItems] = useState([]);
     const [showInput, setShowInput] = useState(false);
     const [visible, setVisible] = useState(false);
 
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
 
-    const getAllUsersItems = async () => {
-        try {
-            const docRef = doc(db, "allItems", auth.currentUser.uid);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data());
-                setAllItems(docSnap.data());
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
     // checks section details
     const checkSection = async () => {
         if (newSection === '' && section === '') {
@@ -66,6 +49,7 @@ const AddItemToList = (props) => {
                     section: section
                 })
             });
+            props.getShoppingListItems();
             setNewItem({
                 food: '',
                 measure: '',
@@ -147,6 +131,7 @@ const AddItemToList = (props) => {
                             )}
                             <Button
                                 onPress={checkSection}
+                                mode='contained'
                                 style={styles.addItemButton}>
                                 Add to list
                             </Button>
