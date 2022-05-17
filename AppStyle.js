@@ -4,7 +4,6 @@ export default StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#F3F3E7',
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
@@ -18,12 +17,18 @@ export default StyleSheet.create({
     homeContainer: {
         flex: 1,
         backgroundColor: '#F3F3E7',
-        alignItems: 'center',
         justifyContent: 'center',
+    },
+    welcomeView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        marginBottom: 15,
     },
     welcomeText: {
         fontWeight: '700',
         marginBottom: 15,
+        fontSize: 26,
     },
     homeCards: {
         width: '90%',
@@ -64,12 +69,22 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontWeight: '700',
     },
+    /* RecipeScreen.js */
+    recipeContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: '#F3F3E7'
+    },
     searchView: {
         flex: 1,
-        backgroundColor: '#FDB750',
+        backgroundColor: '#F6CBB7',
         width: '100%',
         padding: 15,
         justifyContent: 'center',
+        borderBottomLeftRadius: 200,
+        borderBottomRightRadius: 200,
     },
     searchTextInput: {
         fontSize: 18,
@@ -82,18 +97,28 @@ export default StyleSheet.create({
     categoryCardGroup: {
         flex: 2,
     },
+    categoryHeadline: {
+        fontWeight: '700',
+        fontSize: 20,
+        marginTop: 70,
+        marginBottom: 30,
+        marginLeft: 20,
+    },
     categoryCard: {
         width: 250,
     },
     categoryCardText: {
         textTransform: 'capitalize',
     },
+    /* RecipeSearchScreen.js */
     searchResultText: {
         flex: 1,
         backgroundColor: '#F8EA8C',
         width: '100%',
         padding: 25,
         justifyContent: 'center',
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
     },
     keywordStyle: {
         textTransform: 'lowercase',
@@ -123,6 +148,16 @@ export default StyleSheet.create({
     searcedRecipesListText: {
         fontSize: 20,
     },
+    openInstrButton: {
+        fontSize: 16,
+        color: '#955670',
+    },
+    /* SavedRecipesScreen.js */
+    savedRecipesContainer: {
+        flex: 1,
+        width: '90%',
+        alignSelf: 'center',
+    },
     savedRecipeCardTitle: {
         textAlign: 'center',
     },
@@ -134,7 +169,7 @@ export default StyleSheet.create({
         height: 450,
     },
     savedRecipeCard: {
-        height: '75%',
+        height: '80%',
         marginBottom: 10,
     },
 
@@ -215,15 +250,15 @@ export default StyleSheet.create({
     },
     noShoppingListView: {
         flex: 0.3,
-        backgroundColor: '#98D7C2',
+        backgroundColor: '#B7CFDC',
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         margin: 20,
+        height: 600,
     },
-
 
     /* AddShoppingList.js */
     fabButton: {
@@ -264,10 +299,40 @@ export default StyleSheet.create({
     },
     modalContainer: {
         flexGrow: 1,
-        padding: 20,
+        padding: 30,
         backgroundColor: 'white',
         marginTop: 150,
+        justifyContent: 'flex-start',
     },
+    addItemView: {
+        width: '100%',
+    },
+    addItemInput: {
+        width: '80%',
+        marginTop: 10,
+        backgroundColor: 'white',
+        alignSelf: 'center',
+    },
+    rowInputAndButton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    addItemInputRow: {
+        width: '60%',
+        marginTop: 10,
+        backgroundColor: 'white',
+    },
+    addItemButton: {
+        justifyContent: 'flex-end',
+        backgroundColor: '#0D698B',
+        marginTop: 10,
+    },
+    addItemTxt: {
+        fontWeight: '700',
+        marginTop: 20,
+        marginBottom: 20,
+    },
+
 
     /* RecipeDetailsScreen.js */
     recipeCardSaveButtonColor: {
@@ -279,5 +344,39 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         padding: 20,
         height: 400,
+    },
+    /* IngredientsToList.js */
+    ingrToListContainer: {
+        flex: 1,
+        padding: 20,
+    },
+    instructionTxt: {
+        fontWeight: '700',
+        fontSize: 16,
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    bottomButton: {
+        marginTop: 30,
+        backgroundColor: '#E9DDD4',
+    },
+    /* ProfileScreen.js */
+    profileContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    profileDetails: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: 350,
+    },
+    /* SelectImage.js */
+    imageContainer: {
+        flex: 3,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        marginTop: 10,
     },
 })
