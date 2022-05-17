@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from 'react-native';
+import { KeyboardAvoidingView, View } from 'react-native';
 import {
     Button,
     Headline,
@@ -60,28 +60,30 @@ const ProfileScreen = () => {
     return (
         <View style={styles.profileContainer}>
             <SelectImage imageUrl={profile.image} />
-            <Headline style={styles.welcomeText}>Hello {profile.name}!</Headline>
-            <TextInput
-                label="Name"
-                value={profile.name}
-                onChangeText={text => setProfile({ ...profile, name: text })}
-                style={styles.addItemInput}
-            />
-            {noProfile ? (
-                <Button
-                    mode="contained"
-                    onPress={() => saveProfile()}
-                    style={styles.addItemButton}>
-                    Save
-                </Button>
-            ) : (
-                <Button
-                    mode="contained"
-                    onPress={() => updateProfile()}
-                    style={styles.addItemButton}>
-                    Update
-                </Button>
-            )}
+            <KeyboardAvoidingView style={styles.profileDetails}>
+                <Headline style={styles.welcomeText}>Hello {profile.name}!</Headline>
+                <TextInput
+                    label="Name"
+                    value={profile.name}
+                    onChangeText={text => setProfile({ ...profile, name: text })}
+                    style={styles.addItemInput}
+                />
+                {noProfile ? (
+                    <Button
+                        mode="contained"
+                        onPress={() => saveProfile()}
+                        style={styles.addItemButton}>
+                        Save
+                    </Button>
+                ) : (
+                    <Button
+                        mode="contained"
+                        onPress={() => updateProfile()}
+                        style={styles.addItemButton}>
+                        Update
+                    </Button>
+                )}
+            </KeyboardAvoidingView>
         </View>
     );
 
