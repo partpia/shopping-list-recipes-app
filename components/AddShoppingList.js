@@ -40,8 +40,7 @@ const AddShoppingList = () => {
     const createEmptyItemsList = async (id) => {
         try {
             await setDoc(doc(db, "items", id), {
-                active: [],
-                inactive: [],
+                active: []
             })
         } catch (error) {
             console.log(error)

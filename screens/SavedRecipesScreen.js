@@ -33,25 +33,30 @@ const SavedRecipesScreen = ({ navigation, route }) => {
 
     return (
         <View style={styles.savedRecipesContainer}>
-            <FlatList
-                data={recipes}
-                renderItem={({ item }) => (
-                    <View style={styles.savedRecipesList}>
-                        <Card
-                            style={styles.savedRecipesCardList}
-                            onPress={() => navigation.navigate('Recipe Details', { recipe: item, saved: true })}>
-                            <Card.Cover
-                                source={{ uri: item.image }}
-                                style={styles.savedRecipeCard} />
-                            <Card.Content>
-                                <Title style={styles.savedRecipeCardTitle}>{item.label}</Title>
-                            </Card.Content>
-                        </Card>
-                    </View>
-                )}
-                keyExtractor={(item, index) => index}
-            />
-
+            {recipes.length > 0 ? (
+                <FlatList
+                    data={recipes}
+                    renderItem={({ item }) => (
+                        <View style={styles.savedRecipesList}>
+                            <Card
+                                style={styles.savedRecipesCardList}
+                                onPress={() => navigation.navigate('Recipe Details', { recipe: item, saved: true })}>
+                                <Card.Cover
+                                    source={{ uri: item.image }}
+                                    style={styles.savedRecipeCard} />
+                                <Card.Content>
+                                    <Title style={styles.savedRecipeCardTitle}>{item.label}</Title>
+                                </Card.Content>
+                            </Card>
+                        </View>
+                    )}
+                    keyExtractor={(item, index) => index}
+                />
+            ) : (
+                <View style={styles.noShoppingListView}>
+                    <Title>You don't have any recipes yet</Title>
+                </View>
+            )}
         </View>
     );
 }

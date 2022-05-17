@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, View } from 'react-native';
 import { Button, Divider, Headline, List, Subheading } from 'react-native-paper';
 import { auth, db } from "../firebase";
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { arrayRemove, collection, doc, getDoc, getDocs, query, updateDoc } from "firebase/firestore";
 import styles from '../AppStyle';
 import AddItemToList from "../components/AddItemToList";
 import { showToast } from "../components/Toast";
+import { useIsFocused } from '@react-navigation/native';
 
 const ShoppingItemsScreen = ({ route }) => {
     const { listId } = route.params;
@@ -13,11 +14,14 @@ const ShoppingItemsScreen = ({ route }) => {
     const [itemsPickedUp, setItemsPickedUp] = useState([]);
     const [sections, setSections] = useState([]);
     const [noItems, setNoItems] = useState(false);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         getSections();
         getShoppingListItems();
     }, [])
+
+    isFocused
 
     // gets sections that user has saved
     const getSections = async () => {
@@ -42,15 +46,13 @@ const ShoppingItemsScreen = ({ route }) => {
             const docRef = doc(db, `items/${listId}`);
             const docSnap = await getDoc(docRef);
             const active = docSnap.data().active;
-            const inactive = docSnap.data().inactive;
 
             if (docSnap.exists()) {
-                if (active.length === 0 && inactive.length === 0) {
+                if (active.length === 0) {
                     setNoItems(true);
                 }
                 else {
                     setItems(active);
-                    setItemsPickedUp(inactive)
                 }
             }
         } catch (error) {
@@ -70,6 +72,19 @@ const ShoppingItemsScreen = ({ route }) => {
         setItemsPickedUp(tempList);
     }
 
+    const deletePickedUps = async () => {
+        await itemsPickedUp.forEach((item) => {
+            try {
+                updateDoc(doc(db, 'items', listId), {
+                    active: arrayRemove(item)
+                });
+            } catch (error) {
+                console.log(error)
+            }
+        })
+        getShoppingListItems();
+    }
+
     return (
         <ScrollView style={styles.shoppingItemsContainer}>
             {noItems ? (
@@ -79,6 +94,12 @@ const ShoppingItemsScreen = ({ route }) => {
                 </View>
             ) : (
                 <View>
+                    <Button
+                        onPress={() => deletePickedUps()}
+                        mode='contained'
+                        style={styles.addItemButton}>
+                        Delete picked ups
+                    </Button>
                     {sections.map((section) => (
                         <List.Section title={section.name} titleStyle={styles.sectionTitle} key={section.id}>
                             {items &&
@@ -116,7 +137,6 @@ const ShoppingItemsScreen = ({ route }) => {
                         ))}
                     </List.Section>
                 </View>)}
-                <Button>Delete picked ups</Button>
             <AddItemToList listId={listId} sections={sections} getShoppingListItems={getShoppingListItems} />
         </ScrollView>
     );

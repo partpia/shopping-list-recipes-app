@@ -11,7 +11,6 @@ LogBox.ignoreLogs(
   ])
 
 export default function App() {
-
   return (
     <PaperProvider>
       <NavigationContainer styles={styles}>
@@ -23,10 +22,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

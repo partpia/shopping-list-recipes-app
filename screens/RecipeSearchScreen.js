@@ -16,7 +16,7 @@ const RecipeSearchScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         setKeyword(word);
-        //searchRecipesByKeyword(word)
+        searchRecipesByKeyword(word)
     }, [word]);
 
     // fetches recipes by keyword from Edamam recipe API (https://developer.edamam.com/edamam-recipe-api)
