@@ -27,6 +27,12 @@ const CustomNavigationBar = ({ navigation, back }) => {
                     visible={visible}
                     onDismiss={closeMenu}
                     anchor={<Appbar.Action icon='dots-vertical' onPress={openMenu} />}>
+                    <Menu.Item
+                        title="Profile" icon='account'
+                        onPress={() => {
+                            navigation.navigate('Profile')
+                            closeMenu()
+                        }} />
                     <Menu.Item onPress={handleSignOut} title="Sign out" icon='logout-variant' />
                 </Menu>
             </Appbar.Header>

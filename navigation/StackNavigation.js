@@ -11,6 +11,7 @@ import RecipesScreen from "../screens/RecipesScreen";
 import RecipeSearchScreen from "../screens/RecipeSearchScreen";
 import ShoppingItemsScreen from "../screens/ShoppingItemsScreen";
 import IngredientsToListScreen from "../screens/IngredientsToListScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const StackNavigation = () => {
             <Stack.Screen name='Main' component={HomeScreen} />
             <Stack.Screen name='Home' component={BottomTabNavigator} />
             <Stack.Screen options={{ headerShown: false }} name='Login' component={LoginScreen} />
+            <Stack.Screen name='Profile' component={ProfileScreen} />
             <Stack.Screen name='Shopping' component={ShoppingScreen} />
             <Stack.Screen name='Recipes' component={RecipesScreen} />
             <Stack.Screen name='BottomTabs' component={BottomTabNavigator} />
