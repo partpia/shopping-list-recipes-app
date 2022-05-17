@@ -1,6 +1,6 @@
-# shopping-list-recipes-app
+## Shopping lists and recipes -app
 
-React Native-mobiilisovellus, jossa kirjautunut käyttäjä voi luoda ostoslistoja ja lisätä listoihin tuotteita.
+Mobiilisovellus, jossa kirjautunut käyttäjä voi luoda ostoslistoja ja lisätä listoihin tuotteita.
 
 Sovelluksessa voi myös hakea hakusanalla reseptejä. Reseptitiedot haetaan Edamam API (https://developer.edamam.com/edamam-recipe-api).
 
